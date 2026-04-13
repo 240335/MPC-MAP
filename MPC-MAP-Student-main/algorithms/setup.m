@@ -1,3 +1,3 @@
-start_position = [1, 1, pi/2]; % (x, y, theta)
+start_position = [1, 2, 0.5*pi]; % (x, y, theta)
 
-map_name = 'maps/mixed_1.txt';
+map_name = 'maps/custom_1.txt';
