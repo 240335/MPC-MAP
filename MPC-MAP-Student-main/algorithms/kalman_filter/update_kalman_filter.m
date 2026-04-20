@@ -5,12 +5,17 @@ mu = public_vars.mu;
 sigma = public_vars.sigma;
 
 % I. Prediction
-u = [];
+u = public_vars.motion_vector;
+if isempty(u)
+    u = [0, 0]; 
+end
 [mu, sigma] = ekf_predict(mu, sigma, u, public_vars.kf, read_only_vars.sampling_period);
 
 % II. Measurement
-z = [];
-[mu, sigma] = kf_measure(mu, sigma, z, public_vars.kf);
+z = [read_only_vars.gnss_position];
+if ~isempty(z)
+    [mu, sigma] = kf_measure(mu, sigma, z, public_vars.kf);
+end
 
 end
 

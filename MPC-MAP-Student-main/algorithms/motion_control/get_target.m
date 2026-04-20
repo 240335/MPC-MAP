@@ -1,7 +1,7 @@
 function [target] = get_target(estimated_pose, path, lookahead_dist)
 %GET_TARGET Summary of this function goes here
 
-target = [0, 0];
+target = [16, 2];
 
 x = estimated_pose(1);
 y = estimated_pose(2);

@@ -34,11 +34,22 @@ d       = read_only_vars.agent_drive.interwheel_dist;   % 0.2 m
 max_vel = read_only_vars.agent_drive.max_vel;           % 1.0 m/s
 
 % Retrieve MoCap pose
-pose = read_only_vars.mocap_pose;   % [x, y, theta]  (NaN outside MoCap zone)
+%pose = read_only_vars.mocap_pose;   % [x, y, theta]  (NaN outside MoCap zone)
+
+% Retrieve estimated pose
+pose = public_vars.estimated_pose;
 path = public_vars.path;            % N×2 waypoint matrix
 
+%{
 % Safety: no pose or no path  → stand still
 if isempty(pose) || any(isnan(pose)) || isempty(path) || size(path,1) < 2
+    public_vars.motion_vector = [0, 0];
+    return;
+end
+%}
+
+% Safety: no path  → stand still
+if isempty(path) || size(path,1) < 2
     public_vars.motion_vector = [0, 0];
     return;
 end
@@ -47,12 +58,13 @@ x     = pose(1);
 y     = pose(2);
 theta = pose(3);
 
-% --- Stop condition: robot close to the last waypoint ------------------
+% Stop condition: robot close to the last waypoint
 dist_to_end = sqrt((path(end,1) - x)^2 + (path(end,2) - y)^2);
 if dist_to_end < GOAL_RADIUS
     public_vars.motion_vector = [0, 0];
     return;
 end
+
 
 % Pure Pursuit
 target = get_target(pose, path, LOOKAHEAD_DIST);    % look-ahead point [x, y]
@@ -74,5 +86,6 @@ v_R = max(-max_vel, min(max_vel, v_R));
 v_L = max(-max_vel, min(max_vel, v_L));
 
 public_vars.motion_vector = [v_R, v_L];
+
 
 end

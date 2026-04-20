@@ -14,7 +14,7 @@ check_toolboxes;
 setup;
 
 % Default public variables
-public_vars.motion_vector = [0.01, 0.01]; % (vR, vL)
+public_vars.motion_vector = [0.3, 0.3]; % (vR, vL)
 public_vars.init_iterations = 1;
 public_vars.pf_enabled = 0;
 public_vars.kf_enabled = 0;
@@ -130,7 +130,6 @@ while true
       
     % 8.-13. Student workspace
     public_vars = student_workspace(read_only_vars, public_vars);
-    
     read_only_vars.est_position_history = [read_only_vars.est_position_history; public_vars.estimated_pose];
     
     % 14. Move robot
