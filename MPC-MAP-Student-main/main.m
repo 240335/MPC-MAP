@@ -14,7 +14,7 @@ check_toolboxes;
 setup;
 
 % Default public variables
-public_vars.motion_vector = [0, 0]; % (vR, vL)
+public_vars.motion_vector = [0.2, 0.2]; % (vR, vL)
 public_vars.init_iterations = 1;
 public_vars.pf_enabled = 0;
 public_vars.kf_enabled = 0;
@@ -25,8 +25,6 @@ public_vars.lidar_meas_vals = nan(8, 100); % Vektor pro mereni nejistoty LiDAR
 public_vars.std_lidar = nan(1, 8);  % Vektor odchylek kanalu Lidaru
 public_vars.std_gnss = nan(1, 2);   % Vektor odchylek kanalu gnss
 public_vars.pom_prom1 = false;  % Pomocna promena, hlida, ze vypocet histogramu probehne jen jednou
-public_vars.test_vector = [0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5;
-    0.5 0.5 0.5 0.52 0.52 0.54 0.54 0.55 0.55 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5];
 public_vars.help_cnt = 1;
 
 % I. Build map
@@ -132,7 +130,6 @@ while true
       
     % 8.-13. Student workspace
     public_vars = student_workspace(read_only_vars, public_vars);
-    
     read_only_vars.est_position_history = [read_only_vars.est_position_history; public_vars.estimated_pose];
     
     % 14. Move robot
